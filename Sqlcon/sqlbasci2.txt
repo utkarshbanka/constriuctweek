@@ -1,0 +1,28 @@
+1. Count the number of students of each department
+
+Answer == select branch count(*) from stuident group by branch;
+
+2. Count the number of students of each department where the department name starts with ‘E’
+
+Answer: === Select branch, count(*) from stuident where branch Like 'E%';
+
+3. Add a field called MARKS to the table STUDENT which can hold a number upto 8 digit length.
+Answer ==  alter table stuident add marks varchar(8);
+
+4  4. Modify the field :”NAME” of the table STUDENT to hold a maximum of 25 character.
+Answer : alter table stuident modify name varchar(25);
+
+5. Delete all rows from the table STUDENT where branch is ETC.
+delete from stuident where branch = 'etc';
+
+6. Rename the table STUDENT to STUDINFORMATION
+alter table stuident rename to studinformation;
+
+7. Delete all the data part from the table STUDENT.
+truncate table studinformation;
+8. Destroy the table STUDENT.
+drop table studinformation;
+
+
+
+
