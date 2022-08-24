@@ -1,0 +1,49 @@
+1. Write an SQL query to show the second highest salary from a Worker table
+
+mysql> select * from worker where salary = (select max(salary) from worker);
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11 09:00:00 | Admin      |
++-----------+------------+-----------+--------+---------------------+------------+
+2. Write an SQL query to determine the 5 highest salary from a Worker table.
+
+mysql> select salary from worker order by salary desc limit 0,5;
++--------+
+| salary |
++--------+
+| 500000 |
+| 500000 |
+| 300000 |
+| 200000 |
+| 100000 |
+
+3. Write an SQL query to show only even rows from a Worker table.
+mysql> select * from worker where worker_id % 2=0;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11 09:00:00 | Admin      |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11 09:00:00 | Account    |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11 09:00:00 | Admin      |
++-----------+------------+-----------+--------+---------------------+------------+
+
+4. Write an SQL query to fetch the no. of workers for each department in the descending order from the Worker table
+mysql> select department,count(*) co from worker group by department order by co desc;
++------------+----+
+| department | co |
++------------+----+
+| Admin      |  4 |
+| HR         |  2 |
+| Account    |  2 |
++------------+----+
+3 rows in set (0.00 sec)
+5. Write an SQL query to fetch the list of employees with the same salary from the Worker table.
+ select* from worker group by salary having count(salary)>1;
++-----------+------------+-----------+--------+---------------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE        | DEPARTMENT |
++-----------+------------+-----------+--------+---------------------+------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20 09:00:00 | Admin      |
++-----------+------------+-----------+--------+---------------------+------------+

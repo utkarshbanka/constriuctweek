@@ -1,0 +1,97 @@
+Write an SQL query to fetch the employees whose name begins with any two characters, followed by a text “hn” and ending with any
+sequence of characters.
+
+Answe:--
+mysql> select fullname from employeedetails where fullname Like '__hn%';
++-----------+
+| fullname  |
++-----------+
+| john show |
+
+
+2. Write an SQL query to fetch common records between two tables;
+
+mysql> select * from employeedetails;
++-------+--------------+----------+------------+-----------+
+| empid | fullname     | mangerid | adate      | city      |
++-------+--------------+----------+------------+-----------+
+|   121 | john show    |      321 | 2014-01-31 | toronto   |
+|   201 | utkarsh      |      325 | 2017-08-21 | care      |
+|   321 | walter white |      986 | 2015-01-31 | califoria |
+|   421 | kuldeep rana |      876 | 2016-11-27 | new delhi |
++-------+--------------+----------+------------+-----------+
+
+mysql> select * from employesalary;
++-------+---------+--------+----------+
+| empid | project | salary | variable |
++-------+---------+--------+----------+
+|   121 | p1      |   8000 | 500      |
+|   321 | p2      |  10000 | 1000     |
+|   421 | p1      |  12000 | 0        |
++-------+---------+--------+----------+
+
+
+
+
+
+
+mysql> select * from employeedetails p , employesalary e  where p.empid = e.empid;
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+| empid | fullname     | mangerid | adate      | city      | empid | project | salary | variable |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+|   121 | john show    |      321 | 2014-01-31 | toronto   |   121 | p1      |   8000 | 500      |
+|   321 | walter white |      986 | 2015-01-31 | califoria |   321 | p2      |  10000 | 1000     |
+|   421 | kuldeep rana |      876 | 2016-11-27 | new delhi |   421 | p1      |  12000 | 0        |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+
+3. Write an SQL query to fetch records that are present in one table but not in another table.
+mysql> select * from employeedetails;
++-------+--------------+----------+------------+-----------+
+| empid | fullname     | mangerid | adate      | city      |
++-------+--------------+----------+------------+-----------+
+|   121 | john show    |      321 | 2014-01-31 | toronto   |
+|   201 | utkarsh      |      325 | 2017-08-21 | care      |
+|   321 | walter white |      986 | 2015-01-31 | califoria |
+|   421 | kuldeep rana |      876 | 2016-11-27 | new delhi |
++-------+--------------+----------+------------+-----------+
+
+mysql> select * from employesalary;
++-------+---------+--------+----------+
+| empid | project | salary | variable |
++-------+---------+--------+----------+
+|   121 | p1      |   8000 | 500      |
+|   321 | p2      |  10000 | 1000     |
+|   421 | p1      |  12000 | 0        |
++-------+---------+--------+----------+
+
+mysql> select * from employeedetails where empid not in (select empid from employesalary);
++-------+----------+----------+------------+------+
+| empid | fullname | mangerid | adate      | city |
++-------+----------+----------+------------+------+
+|   201 | utkarsh  |      325 | 2017-08-21 | care |
++-------+----------+----------+------------+------+
+
+4. Write an SQL query to find the maximum, minimum, and average salary of the employees
+mysql> select * from employeedetails e Inner join employesalary s on e.empid = s.empid and s.salary = (select max(salary) from employesalary);
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+| empid | fullname     | mangerid | adate      | city      | empid | project | salary | variable |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+|   421 | kuldeep rana |      876 | 2016-11-27 | new delhi |   421 | p1      |  12000 | 0        |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+
+mysql> select * from employeedetails e Inner join employesalary s on e.empid = s.empid and s.salary = (select avg(salary) from employesalary);
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+| empid | fullname     | mangerid | adate      | city      | empid | project | salary | variable |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+|   321 | walter white |      986 | 2015-01-31 | califoria |   321 | p2      |  10000 | 1000     |
++-------+--------------+----------+------------+-----------+-------+---------+--------+----------+
+
+mysql> select * from employeedetails e Inner join employesalary s on e.empid = s.empid and s.salary = (select min(salary) from employesalary);
++-------+-----------+----------+------------+---------+-------+---------+--------+----------+
+| empid | fullname  | mangerid | adate      | city    | empid | project | salary | variable |
++-------+-----------+----------+------------+---------+-------+---------+--------+----------+
+|   121 | john show |      321 | 2014-01-31 | toronto |   121 | p1      |   8000 | 500      |
++-------+-----------+----------+------------+---------+-------+---------+--------+----------+
+
+5. Fetch all the employees who are not working on any project.
+mysql> select * from employeedetails e Inner join employesalary d on e.empid = d.empid and d.project = NULL;

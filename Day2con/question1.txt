@@ -1,0 +1,9 @@
+1)Write an SQL query to report all the duplicate emails.
+
+mysql> select email from person group by email having count(email)>1;
++---------+
+| email   |
++---------+
+| a@b.com |
++---------+
+
